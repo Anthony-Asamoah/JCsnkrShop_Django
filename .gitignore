@@ -1,4 +1,4 @@
 .idea/
 Front-End
 /migrations/
-
+/__pycache__/
