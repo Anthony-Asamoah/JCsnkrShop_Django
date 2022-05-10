@@ -32,11 +32,7 @@
             <div class="row align-items-center py-5">
                 <div class="col-md-8 text-white">
                     <h1>About Us</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
+                    <p>{{ about_body }}</p>
                 </div>
                 <div class="col-md-4">
                     <img src="{% static 'img/about-hero.svg' %}" alt="About Hero">
@@ -51,10 +47,7 @@
         <div class="row text-center pt-5 pb-3">
             <div class="col-lg-6 m-auto">
                 <h1 class="h1">Our Services</h1>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    Lorem ipsum dolor sit amet.
-                </p>
+                <p>{{ services_body }}</p>
             </div>
         </div>
         <div class="row">
@@ -96,10 +89,7 @@
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
                     <h1 class="h1">Our Brands</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        Lorem ipsum dolor sit amet.
-                    </p>
+                    <p>{{ brands_body }}</p>
                 </div>
                 <div class="col-lg-9 m-auto tempaltemo-carousel">
                     <div class="row d-flex flex-row">
@@ -140,39 +130,20 @@
                                     <div class="carousel-item">
                                         <div class="row">
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="{% static 'img/brand_01.png' %}" alt="Brand Logo"></a>
+                                                <a href="#"><object class="img-fluid brand-img" data="{% static 'img/Under_Armour-Logo.wine.svg' %}"></object></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="{% static 'img/brand_02.png' %}" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="{% static 'img/New_Balance_logo.svg.png' %}" alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="{% static 'img/brand_03.png' %}" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="{% static 'img/reebok-logo.png' %}" alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="{% static 'img/brand_04.png' %}" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="{% static 'img/puma-3.svg' %}" alt="Brand Logo"></a>
                                             </div>
                                         </div>
                                     </div>
                                     <!--End Second slide-->
-
-                                    <!--Third slide-->
-                                    <div class="carousel-item">
-                                        <div class="row">
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="{% static 'img/brand_01.png' %}" alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="{% static 'img/brand_02.png' %}" alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="{% static 'img/brand_03.png' %}" alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="{% static 'img/brand_04.png' %}" alt="Brand Logo"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--End Third slide-->
 
                                 </div>
                                 <!--End Slides-->
