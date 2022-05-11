@@ -1,10 +1,21 @@
 from django.contrib import admin
-from .models import product
+from . import models
 
 # Register your models here.
 
 
-@admin.register(product)
+@admin.register(models.category)
+class categoryAdmin(admin.ModelAdmin):
+	list_display = ['name', 'category_of_the_month',]
+	list_editable = ['category_of_the_month']
+	search_fields = ['name']
+	list_filter = list_display
+	list_per_page = 10
+
+
+
+
+@admin.register(models.product)
 class productAdmin(admin.ModelAdmin):
 	list_display = [
 		'category', 'brand', 'color', 'name',
