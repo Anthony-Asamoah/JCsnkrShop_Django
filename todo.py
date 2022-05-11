@@ -1,5 +1,6 @@
 """
 todo: Current App ->
+	create dummy products in admin
 	write views for listings and listing {
 		queries
 		search
