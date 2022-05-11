@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'contact',
     'listings',
     'pages',
+    'django.contrib.humanize',
 
     # Default Apps
     'django.contrib.admin',

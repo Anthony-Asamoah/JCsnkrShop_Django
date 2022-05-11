@@ -1,13 +1,11 @@
 """
 todo: Current App ->
-	create dummy products in admin
+	0 create dummy products in admin
 	write views for listings and listing {
-		queries
 		search
 	{
 	make templates dynamic {
-		listings
-		listing
+		listing: lightbox images & Related stuff
 		search
 	}
 """
