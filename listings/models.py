@@ -7,6 +7,9 @@ class category(models.Model):
 	name = models.CharField(max_length=100, blank=False)
 	category_of_the_month = models.BooleanField(default=False)
 
+	class Meta:
+		verbose_name_plural = "categories"
+
 
 class product(models.Model):
 	category = models.ForeignKey(category, on_delete=models.DO_NOTHING)
