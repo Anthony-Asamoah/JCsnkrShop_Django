@@ -10,7 +10,7 @@ class categoryAdmin(admin.ModelAdmin):
 	list_editable = ['category_of_the_month']
 	search_fields = ['name']
 	list_filter = list_display
-	list_per_page = 10
+	list_per_page = 20
 
 
 @admin.register(models.product)
