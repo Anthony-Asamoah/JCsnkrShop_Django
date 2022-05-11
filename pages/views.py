@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import text, brand
+from .models import text
 # Create your views here.
 
 

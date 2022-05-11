@@ -14,15 +14,3 @@ class text(models.Model):
 
 	class Meta:
 		ordering = ['pk']
-
-
-class brand(models.Model):
-	name = models.CharField(max_length=100)
-	logo = models.ImageField(upload_to='media/%Y/%m/%d/', blank=False)
-	timestamp = models.DateTimeField(default=datetime.now())
-
-	def __str__(self):
-		return self.name
-
-	class Meta:
-		ordering = ['-timestamp']

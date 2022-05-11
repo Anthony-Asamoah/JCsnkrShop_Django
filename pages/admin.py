@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import text, brand
+from .models import text
 
 
 # Register your models here.
@@ -8,8 +8,3 @@ from .models import text, brand
 @admin.register(text)
 class textAdmin(admin.ModelAdmin):
 	list_display = ['about_body', 'services_body', 'brands_body']
-
-
-@admin.register(brand)
-class brandAdmin(admin.ModelAdmin):
-	list_display = ['pk', 'name']
