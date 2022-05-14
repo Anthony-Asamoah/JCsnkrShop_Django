@@ -4,6 +4,12 @@
 
 {% block title %} - {{ listing.brand }} {{ listing.name }} {% endblock %}
 
+{% block head_extra %}
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slick-theme.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slick-theme.css' %}">
+{% endblock %}
+
 {% block content %}
 
 <!-- Open Content -->
@@ -31,14 +37,14 @@
                                 <!--First slide-->
                                     <div class="carousel-item active">
                                         <div class="row">
-                                            <div class="col-3 p-md-5">
+                                            <div class="col-3 p-md-5 product-sub-img">
                                                 <a href="#"><img class="card-img img-fluid" src="{{ listing.img_1.url }}" alt="Brand Logo"></a>
                                             </div>
-                                            <div class="col-3 p-md-5">
+                                            <div class="col-3 p-md-5 product-sub-img">
                                                 <a href="#"><img class="card-img img-fluid" src="{{ listing.img_2.url }}" alt="Brand Logo"></a>
                                             </div>
                                             {% if listing.img_3 %}
-                                                <div class="col-3 p-md-5">
+                                                <div class="col-3 p-md-5 product-sub-img">
                                                     <a href="#"><img class="card-img img-fluid" src="{{ listing.img_3.url }}" alt="Brand Logo"></a>
                                                 </div>
                                             {% endif %}
@@ -50,17 +56,17 @@
                                     <div class="carousel-item">
                                         <div class="row">
                                             {% if listing.img_4 %}
-                                                <div class="col-3 p-md-5">
+                                                <div class="col-3 p-md-5 product-sub-img">
                                                     <a href="#"><img class="card-img img-fluid" src="{{ listing.img_4.url }}" alt="Brand Logo"></a>
                                                 </div>
                                             {% endif %}
                                             {% if listing.img_5 %}
-                                                <div class="col-3 p-md-5">
+                                                <div class="col-3 p-md-5 product-sub-img">
                                                     <a href="#"><img class="card-img img-fluid" src="{{ listing.img_5.url }}" alt="Brand Logo"></a>
                                                 </div>
                                             {% endif %}
                                             {% if listing.img_6 %}
-                                                <div class="col-3 p-md-5">
+                                                <div class="col-3 p-md-5 product-sub-img">
                                                     <a href="#"><img class="card-img img-fluid" src="{{ listing.img_6.url }}" alt="Brand Logo"></a>
                                                 </div>
                                             {% endif %}
@@ -88,11 +94,11 @@
                             <h1 class="h2">{{ listing.brand }} {{ listing.name }}</h1>
                             <p class="h3 py-2">${{ listing.price | intcomma }}</p>
                             <p class="py-2">
-                                <i class="fa fa-star text-warning"></i>
-                                <i class="fa fa-star text-warning"></i>
-                                <i class="fa fa-star text-warning"></i>
-                                <i class="fa fa-star text-warning"></i>
-                                <i class="fa fa-star text-secondary"></i>
+                                    <i class="{% if listing.rating >= 1 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                    <i class="{% if listing.rating >= 2 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                    <i class="{% if listing.rating >= 3 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                    <i class="{% if listing.rating >= 4 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                    <i class="{% if listing.rating >= 5 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
                                 <span class="list-inline-item text-dark">Rating {{ listing.rating }} {% if listing.comment_num %}| {{ listing.comment_num }} Comments{% endif %}</span>
                             </p>
                             <ul class="list-inline">
@@ -119,12 +125,14 @@
                                 </li>
                             </ul>
 
+                            {% if specifications %}
                             <h6>Specification:</h6>
                             <ul class="list-unstyled pb-3">
                                 {% for spec in specifications %}
                                     <li>{{ spec }}</li>
                                 {% endfor %}
                             </ul>
+                            {% endif %}
 
                             <form action="" method="GET">
                                 <input type="hidden" name="product-title" value="Activewear">
@@ -177,22 +185,23 @@
             <!--Start Carousel Wrapper-->
             <div id="carousel-related-product">
 
-                <div class="p-2 pb-3">
+                {% for product in related %}
+                <div class="p-2 pb-3 related-image">
                     <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_08.jpg">
+                        <div class="card rounded-0 ">
+                            <img class="card-img rounded-0 img-fluid" src="{{ product.main_img.url }}">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                                    <li><a class="btn btn-success text-white" href="#"><i class="far fa-heart"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="{% url 'listing' product.id %}"><i class="far fa-eye"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="#"><i class="fas fa-cart-plus"></i></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Red Clothing</a>
+                            <a href="{% url 'listing' product.id %}" class="h3 text-decoration-none">{{ product.branc }} {{ product.name }}</a>
                             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
+                                <li>{{ product.size }}</li>
                                 <li class="pt-2">
                                     <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
                                     <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
@@ -203,446 +212,26 @@
                             </ul>
                             <ul class="list-unstyled d-flex justify-content-center mb-1">
                                 <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
+                                    <i class="{% if product.rating >= 1 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                    <i class="{% if product.rating >= 2 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                    <i class="{% if product.rating >= 3 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                    <i class="{% if product.rating >= 4 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                    <i class="{% if product.rating >= 5 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
                                 </li>
                             </ul>
-                            <p class="text-center mb-0">$20.00</p>
+                            <p class="text-center mb-0">${{ product.price | intcomma }}</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_09.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">White Shirt</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">$25.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_10.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">$45.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_11.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Black Fashion</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">$60.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_08.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li class="">M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">$80.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_09.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">$110.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_10.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">$125.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_11.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">$160.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_08.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">$180.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_09.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">$220.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_10.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">$250.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_11.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">$300.00</p>
-                        </div>
-                    </div>
-                </div>
-
+                {% endfor %}
             </div>
-
-
         </div>
     </section>
     <!-- End Article -->
 
 
 <!-- Start Slider Script -->
-    <script src="assets/js/slick.min.js"></script>
+    <script src="{% static 'js/slick.min.js' %}"></script>
     <script>
         $('#carousel-related-product').slick({
             infinite: true,

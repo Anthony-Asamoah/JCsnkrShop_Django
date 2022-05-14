@@ -1,3 +1,10 @@
 /*
-Custom Css
-*/
+
+Custom Css for Carter's
+ */
+
+.related-image img {
+    object-fit: cover;
+    object-position: center;
+    height: 400px;
+}

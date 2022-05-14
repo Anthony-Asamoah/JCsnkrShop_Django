@@ -61,21 +61,38 @@ def female_listings(request):
 
 def listing(request, listing_id):
 	product = get_object_or_404(models.product, pk=listing_id)
+
 	prod_description = product.description.split("\n")
-	prod_spec = product.specifications.split("\n")
+	if product.specifications:
+		prod_spec = product.specifications.split("\n")
+	else:
+		prod_spec = product.specifications
+
+	related = common.products.filter(
+		sex=product.sex,
+		# category=product.category,
+	)
+
+	try:
+		related[:12]
+	except Exception:
+		pass
 
 	context = {
 		'listing': product,
 		'specifications': prod_spec,
-		'description': prod_description
+		'description': prod_description,
+		'related': related
 	}
 	return render(request, 'listings/listing.html', context)
 
 
 def search(request):
-	if request.method == 'POST':
-
-		context = {common.products.filter()}
+	keywords = request.GET['search']
+	if keywords:
+		context = {
+			'listings': common.products.filter(name__icontains=keywords)
+		}
 		return render(request, 'listings/listings.html', context)
 
 	return redirect('shop')
