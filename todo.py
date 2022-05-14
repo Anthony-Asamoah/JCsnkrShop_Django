@@ -3,12 +3,7 @@ todo: Previous App -> Listings {
 	properly style listing page -> sub images and related img
 }
 todo: Current App -> Contact {
-	create app
-	link app in settings
-	write basic views and urls
-	port html to template
-	save form data to table
-	send form data as email
+	complete alert partial.
 }
 
 todo: next apps -> Accounts
