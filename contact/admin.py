@@ -9,7 +9,7 @@ from .models import contact
 class contactAdmin(admin.ModelAdmin):
 	list_display = ['subject', 'name', 'email', 'complete']
 	list_filter = ['complete', 'timestamp']
-	search_fields = [i for i in list_display if not 'complete']
+	search_fields = [i for i in list_display if i != 'complete']
 	list_display_links = search_fields
 	list_editable = ['complete']
 	list_per_page = 20
