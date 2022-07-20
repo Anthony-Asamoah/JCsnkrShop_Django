@@ -1,10 +1,18 @@
 from django.shortcuts import render
 from .models import text
+from listings.models import product, category
+
 # Create your views here.
 
 
 def index(request):
-	return render(request, 'pages/index.html')
+	context = {
+		'products': product.objects.filter(featured=True)[:3],
+		'categories': category.objects.filter(category_of_the_month=True)[:3],
+		'recommended': product.objects.filter()
+	}
+
+	return render(request, 'pages/index.html', context)
 
 
 def about(request):

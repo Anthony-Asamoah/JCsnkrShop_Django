@@ -3,3 +3,6 @@ Front-End
 migrations/
 __pycache__/
 media/
+staticfiles/
+
+todo.py

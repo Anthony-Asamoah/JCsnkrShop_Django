@@ -1,19 +1,27 @@
 from django.db import models
 from datetime import datetime
-# Create your models here.
+
+category_choices = (
+	('shoes', 'Shoes'),
+	('clothes', 'Clothes'),
+	('accessories', 'Accessories')
+)
+
+sex_choices = (
+	('M', 'Male'),
+	('F', 'Female'),
+	('U', 'Unisex')
+)
 
 
 class category(models.Model):
 	name = models.CharField(max_length=100, blank=False)
 	type = models.CharField(
 		max_length=100,
-		choices=(
-			('shoes', 'Shoes'),
-			('clothes', 'Clothes'),
-			('accessories', 'Accessories')
-		)
+		choices=category_choices
 	)
 	category_of_the_month = models.BooleanField(default=False)
+	image = models.ImageField(blank=False, null=False, upload_to='media/%Y/%m/%d/', default='')
 
 	def __str__(self):
 		return self.name
@@ -28,11 +36,7 @@ class product(models.Model):
 	name = models.CharField(max_length=200, blank=False)
 	sex = models.CharField(
 		max_length=1,
-		choices=(
-			('M', 'Male'),
-			('F', 'Female'),
-			('U', 'Unisex')
-		)
+		choices=sex_choices
 	)
 	price = models.DecimalField(blank=False, decimal_places=2, max_digits=12)
 	description = models.TextField(blank=True, null=True)

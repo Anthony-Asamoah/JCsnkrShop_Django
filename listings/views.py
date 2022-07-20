@@ -1,11 +1,8 @@
+import logging
+
 from django.shortcuts import render, redirect, get_object_or_404
 from . import models
 from django.core.paginator import Paginator
-
-
-def sieve(self, sex, query):
-	final = query.filter(sex=sex)
-	return final
 
 
 class common:
@@ -18,9 +15,28 @@ class common:
 	category_type = set(category_type)
 
 
+def sieve(item):
+	# get queryset
+	products = common.products
+	logging.info(products)
+
+	# get filter
+	logging.info(item)
+	if item in models.category_choices:
+		products.filter(category=item)
+	if item in models.sex_choices:
+		products.filter()
+
+	# select filter
+	# apply filter
+	# return queryset
+	pass
+
+
 # ################################################################# #
 
-def all_listings(request):
+def all_listings(request, item=None):
+	products = sieve(item)
 	paginator = Paginator(common.products, 9)
 	single_page = paginator.get_page(request.GET.get('page'))
 
@@ -71,7 +87,7 @@ def listing(request, listing_id):
 	related = common.products.filter(
 		sex=product.sex,
 		# category=product.category,
-	)
+	).exclude(id=product.id)[:5]
 
 	try:
 		related[:12]

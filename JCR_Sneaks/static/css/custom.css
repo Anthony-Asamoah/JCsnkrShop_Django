@@ -3,8 +3,30 @@
 Custom Css for Carter's
  */
 
-.related-image img {
+.related {
+    width: auto !important;
+    margin: auto;
+}
+.related img {
     object-fit: cover;
     object-position: center;
-    height: 400px;
+    min-width: 200px !important;
+    width: auto!important;
+    height: 300px;
+}
+
+.recommended .content .card {
+    transition: .5s ease;
+    border: 5px solid red;
+}
+.recommended .card:hover {
+    padding: 25px!important;
+}
+.recommended .card img {
+    object-fit: cover;
+    object-position: center;
+}
+
+.lightbox-img .row .product-sub-img {
+    margin: auto;
 }

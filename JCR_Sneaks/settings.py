@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from os import path
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(level)s - %(message)s'
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.contrib import messages
@@ -90,7 +96,7 @@ DATABASES = {
 		'USER': 'postgres',
 		'PASSWORD': 'admin1234',
 		'HOST': 'localhost',
-		'PORT': 5000
+		'PORT': 5432
 	}
 }
 
@@ -130,7 +136,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = path.join(BASE_DIR, 'static')
+STATIC_ROOT = path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
 	path.join(BASE_DIR, 'JCR_Sneaks/static'),
 ]

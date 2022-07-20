@@ -32,19 +32,19 @@
                         <!--Start Carousel Wrapper-->
                         <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item" data-bs-ride="carousel">
                             <!--Start Slides-->
-                            <div class="carousel-inner product-links-wap" role="listbox">
+                            <div class="carousel-inner product-links-wap lightbox-img" role="listbox">
 
                                 <!--First slide-->
                                     <div class="carousel-item active">
                                         <div class="row">
-                                            <div class="col-3 p-md-5 product-sub-img">
+                                            <div class="col-3 product-sub-img">
                                                 <a href="#"><img class="card-img img-fluid" src="{{ listing.img_1.url }}" alt="Brand Logo"></a>
                                             </div>
-                                            <div class="col-3 p-md-5 product-sub-img">
+                                            <div class="col-3 product-sub-img">
                                                 <a href="#"><img class="card-img img-fluid" src="{{ listing.img_2.url }}" alt="Brand Logo"></a>
                                             </div>
                                             {% if listing.img_3 %}
-                                                <div class="col-3 p-md-5 product-sub-img">
+                                                <div class="col-3 product-sub-img">
                                                     <a href="#"><img class="card-img img-fluid" src="{{ listing.img_3.url }}" alt="Brand Logo"></a>
                                                 </div>
                                             {% endif %}
@@ -56,17 +56,17 @@
                                     <div class="carousel-item">
                                         <div class="row">
                                             {% if listing.img_4 %}
-                                                <div class="col-3 p-md-5 product-sub-img">
+                                                <div class="col-3 product-sub-img">
                                                     <a href="#"><img class="card-img img-fluid" src="{{ listing.img_4.url }}" alt="Brand Logo"></a>
                                                 </div>
                                             {% endif %}
                                             {% if listing.img_5 %}
-                                                <div class="col-3 p-md-5 product-sub-img">
+                                                <div class="col-3 product-sub-img">
                                                     <a href="#"><img class="card-img img-fluid" src="{{ listing.img_5.url }}" alt="Brand Logo"></a>
                                                 </div>
                                             {% endif %}
                                             {% if listing.img_6 %}
-                                                <div class="col-3 p-md-5 product-sub-img">
+                                                <div class="col-3 product-sub-img">
                                                     <a href="#"><img class="card-img img-fluid" src="{{ listing.img_6.url }}" alt="Brand Logo"></a>
                                                 </div>
                                             {% endif %}
@@ -91,7 +91,7 @@
                 <div class="col-lg-7 mt-5">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="h2">{{ listing.brand }} {{ listing.name }}</h1>
+                            <h1 class="h2"><b>{{ listing.brand | upper}}</b> {{ listing.name }}</h1>
                             <p class="h3 py-2">${{ listing.price | intcomma }}</p>
                             <p class="py-2">
                                     <i class="{% if listing.rating >= 1 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
@@ -176,91 +176,87 @@
     <!-- Close Content -->
 
     <!-- Start Article -->
+    {% if related %}
     <section class="py-5">
         <div class="container">
             <div class="row text-left p-2 pb-3">
                 <h4>Related Products</h4>
             </div>
-
             <!--Start Carousel Wrapper-->
-            <div id="carousel-related-product">
-
+            <div class="row" id="related">
                 {% for product in related %}
-                <div class="p-2 pb-3 related-image">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0 ">
-                            <img class="card-img rounded-0 img-fluid" src="{{ product.main_img.url }}">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="#"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="{% url 'listing' product.id %}"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="#"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
+                    <div class="related" id="carousel-related-product col-sm-3">
+                        <div class="p-2 pb-3 related-image">
+                            <div class="product-wap card rounded-0">
+                                <div class="card rounded-0 ">
+                                    <img class="card-img rounded-0 img-fluid" src="{{ product.main_img.url }}">
+                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                        <ul class="list-unstyled">
+                                            <li><a class="btn btn-success text-white" href="#"><i class="far fa-heart"></i></a></li>
+                                            <li><a class="btn btn-success text-white mt-2" href="{% url 'listing' product.id %}"><i class="far fa-eye"></i></a></li>
+                                            <li><a class="btn btn-success text-white mt-2" href="#"><i class="fas fa-cart-plus"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <a href="{% url 'listing' product.id %}" class="h3 text-decoration-none">{{ product.brand }} {{ product.name }}</a>
+                                    <ul class="list-unstyled d-flex justify-content-right mb-1">
+                                        <li>
+                                            <i class="{% if product.rating >= 1 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                            <i class="{% if product.rating >= 2 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                            <i class="{% if product.rating >= 3 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                            <i class="{% if product.rating >= 4 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                            <i class="{% if product.rating >= 5 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
+                                        </li>
+                                    </ul>
+                                    <p class="text-left mb-0">${{ product.price | intcomma }}</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <a href="{% url 'listing' product.id %}" class="h3 text-decoration-none">{{ product.branc }} {{ product.name }}</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>{{ product.size }}</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="{% if product.rating >= 1 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
-                                    <i class="{% if product.rating >= 2 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
-                                    <i class="{% if product.rating >= 3 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
-                                    <i class="{% if product.rating >= 4 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
-                                    <i class="{% if product.rating >= 5 %}text-warning{% else %}text-muted{% endif %} fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">${{ product.price | intcomma }}</p>
-                        </div>
                     </div>
-                </div>
                 {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
     <!-- End Article -->
 
 
 <!-- Start Slider Script -->
     <script src="{% static 'js/slick.min.js' %}"></script>
     <script>
-        $('#carousel-related-product').slick({
-            infinite: true,
-            arrows: false,
-            slidesToShow: 4,
-            slidesToScroll: 3,
-            dots: true,
-            responsive: [{
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 3
+        $(document).ready(function(){
+
+            $('#carousel-related-product').slick({
+                infinite: true,
+                arrows: false,
+                slidesToShow: 4,
+                slidesToScroll: 3,
+                dots: true,
+                responsive: [{
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 3
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 3
+                        }
                     }
-                },
-                {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 3
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 3
-                    }
-                }
-            ]
+                ]
+            });
+
         });
     </script>
     <!-- End Slider Script -->

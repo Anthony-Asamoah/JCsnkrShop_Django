@@ -1,12 +1,9 @@
 """
-todo: Previous App -> Listings {
-	properly style listing page -> sub images and related img
-}
 todo: Current App -> Contact {
 	complete alert partial.
 }
 
-todo: next apps -> Accounts
+todo: next apps -> Accounts(with dash), Cart
 
 App Listing ->
 # todo: let one item have multiple sizes and colors
@@ -20,3 +17,27 @@ App Pages ->
 # todo: style admin area
 <-
 """
+
+"""
+Sex
+
+type
+name
+"""
+
+"""
+recommended products
+
+get liked items
+	find similarities: 
+			category
+			size
+			color
+			brand
+			price
+			rating
+			
+likes function
+
+"""
+
