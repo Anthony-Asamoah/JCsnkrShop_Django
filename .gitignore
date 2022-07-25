@@ -5,5 +5,12 @@ __pycache__/
 media/
 staticfiles/
 
+
 logs.txt
 todo.py
+
+JCR_Sneaks/__pycache__/
+contact/__pycache__/
+listings/__pycache__/
+pages/__pycache__/
+accounts/__pycache__/
