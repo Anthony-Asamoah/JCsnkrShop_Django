@@ -15,8 +15,9 @@ from os import path
 import logging
 
 logging.basicConfig(
+    filename='logs.txt',
     level=logging.DEBUG,
-    format='%(asctime)s - %(level)s - %(message)s'
+    format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
