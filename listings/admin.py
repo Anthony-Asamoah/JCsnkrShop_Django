@@ -9,7 +9,7 @@ class categoryAdmin(admin.ModelAdmin):
 	list_display = ['type', 'name', 'category_of_the_month']
 	list_editable = ['category_of_the_month']
 	search_fields = ['name']
-	list_filter = list_display
+	list_filter = [i for i in list_display if i != 'name']
 	list_per_page = 20
 
 
