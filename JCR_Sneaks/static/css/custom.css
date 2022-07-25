@@ -30,3 +30,24 @@ Custom Css for Carter's
 .lightbox-img .row .product-sub-img {
     margin: auto;
 }
+
+.featured .card {
+    opacity: .9;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+}
+.featured .card img{
+    object-position: center;
+    object-fit: cover;
+    height: 500px !important;
+}
+
+#categoryOfTheMonth .items {
+    height: 500px;
+}
+#categoryOfTheMonth .items img {
+    height: 80%;
+    width: 100%;
+    margin: auto;
+    object-fit: cover;
+    object-position: center;
+}
