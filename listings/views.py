@@ -1,78 +1,41 @@
-import logging
-
 from django.shortcuts import render, redirect, get_object_or_404
 from . import models
-from django.core.paginator import Paginator
+from .utils import common, sieve, single_page, brands_text
+from pages.views import brands
 
 
-class common:
-	products = models.product.objects.all()
-	categories = models.category.objects.all()
-
-	category_type = []
-	for i in categories:
-		category_type.append(i.type)
-	category_type = set(category_type)
+context = {
+	'category_type': common.category_type,
+	'categories': common.categories,
+	'brands': brands(),
+	'brands_body': brands_text()
+}
 
 
-def sieve(item):
-	# get queryset
-	products = common.products
-	logging.info(products)
-
-	# get filter
-	logging.info(item)
-	if item in models.category_choices:
-		products.filter(category=item)
-	if item in models.sex_choices:
-		products.filter()
-
-	# select filter
-	# apply filter
-	# return queryset
-	pass
-
-
-# ################################################################# #
-
-def all_listings(request, item=None):
-	products = sieve(item)
-	paginator = Paginator(common.products, 9)
-	single_page = paginator.get_page(request.GET.get('page'))
-
-	context = {
-		'listings': single_page,
-		'category_type': common.category_type,
-		'categories': common.categories
-	}
+def all_listings(request, item=False):
+	context.update({'listings': single_page(sieve(category=item), request)})
 	return render(request, 'listings/listings.html', context)
 
 
 def male_listings(request):
-	products = common.products.filter(sex='M')
-
-	paginator = Paginator(products, 9)
-	single_page = paginator.get_page(request.GET.get('page'))
-
-	context = {
-		'listings': single_page,
-		'category_type': common.category_type,
-		'categories': common.categories
-	}
+	context.update({'listings': single_page(sieve(sex='M'), request)})
 	return render(request, 'listings/listings.html', context)
 
 
 def female_listings(request):
-	products = common.products.filter(sex='F')
-
-	paginator = Paginator(products, 9)
-	single_page = paginator.get_page(request.GET.get('page'))
-	context = {
-		'listings': single_page,
-		'category_type': common.category_type,
-		'categories': common.categories
-	}
+	context.update({'listings': single_page(sieve(sex='F'), request)})
 	return render(request, 'listings/listings.html', context)
+
+
+def search(request):
+	keywords = request.GET['search']
+	if keywords:
+		context = {
+			'listings': common.products.filter(name__icontains=keywords)
+		}
+		return render(request, 'listings/listings.html', context)
+
+	return redirect('shop')
 
 
 def listing(request, listing_id):
@@ -87,7 +50,7 @@ def listing(request, listing_id):
 	related = common.products.filter(
 		sex=product.sex,
 		# category=product.category,
-	).exclude(id=product.id)[:5]
+	).exclude(id=product.id)
 
 	try:
 		related[:12]
@@ -101,14 +64,3 @@ def listing(request, listing_id):
 		'related': related
 	}
 	return render(request, 'listings/listing.html', context)
-
-
-def search(request):
-	keywords = request.GET['search']
-	if keywords:
-		context = {
-			'listings': common.products.filter(name__icontains=keywords)
-		}
-		return render(request, 'listings/listings.html', context)
-
-	return redirect('shop')
