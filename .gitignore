@@ -5,4 +5,5 @@ __pycache__/
 media/
 staticfiles/
 
+logs.txt
 todo.py
